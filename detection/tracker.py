@@ -14,5 +14,8 @@ class Tracker:
             x1, y1, x2, y2 = d["bbox"]
             conf = d["confidence"]
             det_array.append([x1, y1, x2, y2, conf])
-        tracks = self.tracker.update(np.array(det_array))
-        return tracks
+        if len(det_array) == 0:
+            dets = np.empty((0, 5))
+        else:
+            dets = np.array(det_array)
+        return self.tracker.update(dets)
